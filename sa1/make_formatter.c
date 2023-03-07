@@ -39,7 +39,7 @@ formatter make_formatter(const char *format) {
     fill_memory(&function_content[FORMAT_ARG_INDEX], (uint64_t) format_addr);
     fill_memory(&function_content[PRINT_ARG_INDEX], (uint64_t) printf_addr);
     uint8_t *ptr = mmap(NULL, FUNCTION_SIZE,
-                        PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+                        PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
 
     if (ptr == MAP_FAILED) {
         fprintf(stderr, "Mapping Failed\n");
