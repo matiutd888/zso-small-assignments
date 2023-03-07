@@ -5,7 +5,7 @@
 #include <string.h>
 #include "make_formatter.h"
 
-uint8_t function_content[] = {
+static uint8_t function_content[] = {
         0x55,
         0x48, 0x89, 0xE5,
         0x48, 0x83, 0xEC, 0x10,
@@ -22,11 +22,11 @@ uint8_t function_content[] = {
         0xC3,
 };
 
-const int FUNCTION_SIZE = sizeof(function_content) / sizeof(uint8_t);
-const int FORMAT_ARG_INDEX = 18;
-const int PRINT_ARG_INDEX = 36;
+#define FUNCTION_SIZE (sizeof(function_content) / sizeof(uint8_t))
+#define FORMAT_ARG_INDEX 18
+#define PRINT_ARG_INDEX 36
 
-void fill_memory(uint8_t *place, uint64_t address) {
+static void fill_memory(uint8_t *place, uint64_t address) {
     for (int i = 0; i < 8; i++) {
         place[i] = address % (1 << 8);
         address >>= 8;
