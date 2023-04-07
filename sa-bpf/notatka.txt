@@ -1,0 +1,3 @@
+Program nie działą dla funkcji "non-tracable"
+
+Możliwości - it's not traceable (either non-existing, inlined, or marked as "notrace"
