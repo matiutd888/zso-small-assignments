@@ -1,0 +1,13 @@
+diff --git a/init/main.c b/init/main.c
+index e1c3911..3f22d3d 100644
+--- a/init/main.c
++++ b/init/main.c
+@@ -1647,6 +1647,8 @@ static noinline void __init kernel_init_freeable(void)
+ 		prepare_namespace();
+ 	}
+ 
++	printk(KERN_INFO "Hello, world!\n");
++
+ 	/*
+ 	 * Ok, we have completed the initial bootup, and
+ 	 * we're essentially up and running. Get rid of the
