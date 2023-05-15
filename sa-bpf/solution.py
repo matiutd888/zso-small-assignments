@@ -1,14 +1,4 @@
 #!/usr/bin/python
-#
-# stacksnoop    Trace a kernel function and print all kernel stack traces.
-#               For Linux, uses BCC, eBPF, and currently x86_64 only. Inline C.
-#
-# USAGE: stacksnoop [-h] [-p PID] [-s] [-v] function
-#
-# Copyright 2016 Netflix, Inc.
-# Licensed under the Apache License, Version 2.0 (the "License")
-#
-# 12-Jan-2016   Brendan Gregg   Created this.
 
 from __future__ import print_function
 from bcc import BPF
@@ -16,10 +6,6 @@ import argparse
 import time
 import os
 
-# arguments
-examples = """examples:
-    ./stacksnoop ext4_sync_fs           # print kernel stack traces for ext4_sync_fs
-"""
 parser = argparse.ArgumentParser(
     description="Trace and print kernel stack traces for a kernel function",
     formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -63,8 +49,6 @@ bpf_text = bpf_text.replace('FILTER',
 b = BPF(text=bpf_text)
 b.attach_kprobe(event=function, fn_name="trace_stack")
 
-# TASK_COMM_LEN = 16  # linux/sched.h
-
 matched = b.num_open_kprobes()
 if matched == 0:
     print("Function \"%s\" not found. Exiting." % function)
@@ -81,6 +65,7 @@ def print_event(cpu, data, size):
 
     ts = time.time() - start_ts
 
+    print("\nSTART PRINT TRACE")
     print("%-18.9f %-6d %-3d %s" %
          (ts, event.pid, cpu, function))
 
@@ -88,7 +73,7 @@ def print_event(cpu, data, size):
         sym = b.ksym(addr, show_offset=True).decode('utf-8', 'replace')
         print("\t%s" % sym)
 
-    print("END PRINT EVENT")
+    print("END PRINT TRACE")
 
 if __name__ == "__main__":
     b["events"].open_perf_buffer(print_event)

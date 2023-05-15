@@ -1,3 +1,10 @@
 Program nie działą dla funkcji "non-tracable"
+Funkcje są non-tracable, gdy
+1. Są zaznaczone jako notrace (makro w kodzie linuxa)
+lub
+2. Są inline
 
-Możliwości - it's not traceable (either non-existing, inlined, or marked as "notrace"
+Dlaczego program nie działa dla takich funkcji? 
+Dołączanie kprobe nie działa dla funkcji inline, ponieważ program musiałby szukać wszystkich jej zinlinowanych występowań. Jest to limitacja narzędzia kprobe (https://docs.kernel.org/trace/kprobes.html#kprobes-features-and-limitations)
+
+
