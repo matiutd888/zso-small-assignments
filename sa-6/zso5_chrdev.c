@@ -124,8 +124,8 @@ static int hello_init(void)
 	int err;
 	hello_buffer = kmalloc(sizeof(char) * bufsize, GFP_KERNEL);
 	if (!hello_buffer) {
-		err = -ENOMEM
-		goto err_alloc;
+		err = -ENOMEM;
+		goto error_kmalloc;
 	}
 	
 	curr_reply_len = hello_len;
@@ -168,6 +168,8 @@ err_cdev_2:
 err_cdev:
 	unregister_chrdev_region(hello_major, 2);
 err_alloc:
+    kfree(hello_buffer);
+error_kmalloc:
 	return err;
 }
 
